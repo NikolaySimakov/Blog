@@ -34,6 +34,7 @@
 </template>
 
 <script>
+import * as fb from "@/firebase";
 export default {
   data() {
     return {
@@ -49,15 +50,25 @@ export default {
   methods: {
     async onSubmit() {
       if (this.form.password === this.form.password_rt) {
-        this.errorMessage = await this.$store.dispatch("signup", {
-          email: this.form.email,
-          password: this.form.password,
-          name: this.form.name,
-          imageURL: "https://image.flaticon.com/icons/svg/565/565452.svg"
-        });
+        await this.signup();
       } else {
         this.errorMessage = "Password mismatch!";
       }
+    },
+    async signup() {
+      await fb.auth
+        .createUserWithEmailAndPassword(this.form.email, this.form.password)
+        .then(snapshot => {
+          fb.users.doc(snapshot.user.uid).set({
+            name: this.form.name,
+            email: this.form.email,
+            imageURL: "https://image.flaticon.com/icons/svg/565/565452.svg"
+          });
+          this.$router.push("/");
+        })
+        .catch(error => {
+          this.errorMessage = error.message;
+        });
     }
   }
 };
