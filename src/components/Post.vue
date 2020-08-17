@@ -1,18 +1,16 @@
 <template>
   <div class="container mt-3" align="left">
     <b-modal :id="'editModal'+docId" title="Edit a post" centered @ok="handleOk()">
-      <b-form ref="form" @submit.stop.prevent="handleSubmit">
-        <b-form-group label="Title" label-for="title-input" invalid-feedback="Title is required">
-          <b-form-input id="title-input" v-model="editForm.title"></b-form-input>
-        </b-form-group>
-        <b-form-group
-          label="Post body"
-          label-for="body-textarea"
-          invalid-feedback="Post body is required"
-        >
-          <b-form-textarea id="body-textarea" v-model="editForm.body" rows="3" max-rows="6"></b-form-textarea>
-        </b-form-group>
-      </b-form>
+      <b-form-group label="Title" label-for="title-input" invalid-feedback="Title is required">
+        <b-form-input id="title-input" v-model="editForm.title"></b-form-input>
+      </b-form-group>
+      <b-form-group
+        label="Post body"
+        label-for="body-textarea"
+        invalid-feedback="Post body is required"
+      >
+        <b-form-textarea id="body-textarea" v-model="editForm.body" rows="3" max-rows="6"></b-form-textarea>
+      </b-form-group>
     </b-modal>
     <b-card
       @click="showSettings()"
@@ -73,19 +71,17 @@ export default {
     }
   },
   methods: {
-    async handleOk(bvModalEvt) {
+    async handleOk() {
       await this.editPost();
-      bvModalEvt.preventDefault();
-      this.handleSubmit();
     },
     async editPost() {
-      await this.$store.dispatch('editPost', {
+      await this.$store.dispatch("editPost", {
         docId: this.docId,
         values: {
           title: this.editForm.title,
           body: this.editForm.body
         }
-      })
+      });
     },
     showSettings() {
       if (this.pageOwner) {
