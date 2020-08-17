@@ -141,8 +141,9 @@ export default {
     myURL() {
       return `/user/${fb.auth.currentUser.uid}`;
     },
-    logout() {
-      this.$store.dispatch("logout");
+    async logout() {
+      await fb.auth.signOut();
+      this.$router.push("/signin");
     }
   }
 };
