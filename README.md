@@ -1,6 +1,6 @@
 # Blog-vuejs
 
-
+![Blog example](public/screenshot.png)
 
 ## Project setup
 ```
