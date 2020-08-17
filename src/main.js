@@ -12,6 +12,15 @@ import 'bootstrap-vue/dist/bootstrap-vue.css'
 
 Vue.config.productionTip = false
 
+router.beforeEach((to, from, next) => {
+  if (to.matched.some(record => record.meta.requiresAuth)) {
+    const user = auth.currentUser;
+    if (user === null) {
+      next({ name: 'Signin' })
+    }
+  } else next()
+});
+
 let app
 auth.onAuthStateChanged(user => {
   if (!app) {
