@@ -52,8 +52,8 @@ export default {
         this.errorMessage = await this.$store.dispatch("signup", {
           email: this.form.email,
           password: this.form.password,
-          displayName: this.form.name,
-          photoURL: "https://image.flaticon.com/icons/svg/565/565452.svg"
+          name: this.form.name,
+          imageURL: "https://image.flaticon.com/icons/svg/565/565452.svg"
         });
       } else {
         this.errorMessage = "Password mismatch!";
