@@ -17,7 +17,7 @@ router.beforeEach((to, from, next) => {
     const user = auth.currentUser;
     if (user === null) {
       next({ name: 'Signin' })
-    }
+    } else next()
   } else next()
 });
 
