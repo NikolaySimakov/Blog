@@ -4,6 +4,9 @@
       <b-row class="align-items-center h-100">
         <div class="container mx-auto justify-content-center px-3" align="center">
           <b-card class="my-card">
+            <div v-if="errorMessage !== ''">
+              <b-alert show variant="danger">{{errorMessage}}</b-alert>
+            </div>
             <b-form-group id="input-group-1" label="Email address" label-for="input-1">
               <b-form-input id="input-1" v-model="form.email" type="email" required></b-form-input>
             </b-form-group>
@@ -25,18 +28,28 @@
 </template>
 
 <script>
+import { auth } from "@/firebase";
 export default {
   data() {
     return {
       form: {
         email: "",
         password: ""
-      }
+      },
+      errorMessage: ""
     };
   },
   methods: {
-    onSubmit() {
-      this.$store.dispatch("signin", this.form);
+    async onSubmit() {
+      await auth
+        .signInWithEmailAndPassword(this.form.email, this.form.password)
+        .then(() => {
+          this.$router.push("/");
+        })
+        .catch(error => {
+          this.errorMessage = error.message;
+        });
+      this.$router.push("/");
     }
   }
 };
