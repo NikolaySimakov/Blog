@@ -49,7 +49,6 @@ export default {
         .catch(error => {
           this.errorMessage = error.message;
         });
-      this.$router.push("/");
     }
   }
 };
