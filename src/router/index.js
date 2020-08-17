@@ -6,26 +6,38 @@ import Signup from '@/views/Signup.vue'
 
 Vue.use(VueRouter)
 
-  const routes = [
+const routes = [
   {
     path: '/',
     name: 'Main',
-    component: Profile
-  },
+    component: Profile,
+    meta: {
+      requiresAuth: true
+    }
+  }, 
   {
     path: '/user/:id',
     name: 'Profile',
-    component: Profile
+    component: Profile,
+    meta: {
+      requiresAuth: true
+    }
   },
   {
     path: '/signin',
     name: 'Signin',
-    component: Signin
+    component: Signin,
+    meta: {
+        guest: true
+    }
   },
   {
     path: '/signup',
     name: 'Signup',
-    component: Signup
+    component: Signup,
+    meta: {
+        guest: true
+    }
   },
   {
     path: '*',
