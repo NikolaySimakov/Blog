@@ -30,8 +30,5 @@ auth.onAuthStateChanged(user => {
       render: h => h(App)
     }).$mount('#app')
   }
-
-  if (user) {
-    store.dispatch('fetchUserProfile', user)
-  }
+  if (user !== null && ['/signup', '/signin'].includes(router.currentRoute.path)) router.push('/')
 })
